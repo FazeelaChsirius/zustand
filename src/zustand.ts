@@ -20,6 +20,19 @@ interface ProductInterface {
     removeProduct: ()=>void
 }
 
+interface StudentData {
+    id: number
+    fullname: string
+    email: string
+    mobile: number
+    address: string
+}
+
+interface StudentInterface {
+    students: StudentData[] | []
+    setStudent: (payload: StudentData)=>void
+}
+
 export const useCounter = create<CounterInterface>()(
     persist(
         (set) => ({
@@ -36,3 +49,14 @@ export const useProduct = create<ProductInterface>((set) => ({
     setProduct: (payload: ProductData) => set(() => ({ product: payload })),
     removeProduct: () => set(() => ({ product: null }))
 }))
+
+export const useStudent = create<StudentInterface>()(
+    persist(
+        (set) => ({
+            students: [],
+            setStudent: (payload: StudentData) => set((state) => ({ students: [...state.students, payload] }))
+        }),
+        {name: "studentStorage"}
+    )
+)
+    

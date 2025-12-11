@@ -1,10 +1,16 @@
 import {Button, Card, Form, Input, InputNumber} from "antd"
 import {ArrowRightOutlined} from "@ant-design/icons"
+import { useStudent } from "../zustand"
+import { useNavigate } from "react-router-dom"
 
 const Home = () => {
+  const navigate = useNavigate()
+  const { setStudent } = useStudent((state) => state)
 
   const handleStudent = (values: any) => {
-    console.log(values)
+    values.id = Date.now()
+    setStudent(values)
+    navigate("/students")
   }
 
   return (
