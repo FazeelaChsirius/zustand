@@ -6,6 +6,20 @@ interface CounterInterface {
     decrese: ()=>void
 }
 
+interface ProductData {
+    id: string
+    title: string
+    description: string
+    price: number
+    image: string
+}
+
+interface ProductInterface {
+    product: ProductData | null
+    setProduct: (payload: ProductData)=>void
+    removeProduct: ()=>void
+}
+
 export const useCounter = create<CounterInterface>()(
     persist(
         (set) => ({
@@ -16,3 +30,9 @@ export const useCounter = create<CounterInterface>()(
         {name: "counterStorage"}
     )
 )
+
+export const useProduct = create<ProductInterface>((set) => ({
+    product: null,
+    setProduct: (payload: ProductData) => set(() => ({ product: payload })),
+    removeProduct: () => set(() => ({ product: null }))
+}))

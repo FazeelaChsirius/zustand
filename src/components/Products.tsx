@@ -3,6 +3,7 @@ import axios from "axios"
 import { Button, Card, Skeleton } from "antd"
 import { CarOutlined } from "@ant-design/icons"
 import { useNavigate } from "react-router-dom"
+import { useProduct } from "../zustand"
 
 const fetcher = async (url: string) => {
     try {
@@ -18,9 +19,11 @@ const fetcher = async (url: string) => {
 
 const Products = () => {
     const navigate = useNavigate()
+    const { setProduct } = useProduct((state) => state)
     const {data, error, isLoading} = useSWR("https://fakestoreapi.com/products", fetcher)
     
     const buyNow = (item: any) => {
+        setProduct(item)
         navigate(`/products/${item.title.split(" ").join("-")}`)
     }
 
